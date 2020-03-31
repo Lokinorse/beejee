@@ -4,7 +4,7 @@ class Session
 {
     public static function init()
     {
-        if(!isset($SESSION)){
+        if(!isset($_SESSION)){
         session_start();
         }
     }
@@ -22,9 +22,10 @@ class Session
     }
     public static function destroy()
     {
-        if(isset($SESSION)){
-            unset($_SESSION);
+        if(isset($_SESSION)){
+/*             unset($_SESSION); */
             session_destroy();
+
         }
     }
 

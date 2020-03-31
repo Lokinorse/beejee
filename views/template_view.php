@@ -9,11 +9,12 @@
     </header>
 
 </head>
-<body></body>
+<body>
+</body>
 
-<footer class="footer col-xl-5  mx-auto">
+<!-- <footer class="footer col-xl-5  mx-auto">
       <div class="container  col-xl-9  mx-auto fixed-bottom">
         <span class="text-muted">Developed for BeeJee</span>
       </div>
-    </footer>
+    </footer> -->
 </html>

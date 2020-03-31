@@ -11,21 +11,19 @@ class Admin_Logged extends Controller
     {    
         parent::__construct();
         Session::init();
-
         $logged = Session::get('admin_logged');
         if ($logged == false) {
-/*             header('location: admin'); */
             Session::destroy ();
-
+            header('location: /admin');
             exit;
         }
         $this->view->render('admin_logged');
 
     }
     function logout (){
-        header('location: ../index');
+/*         header('location: /'); */
         Session::destroy();
-
+        echo "<meta http-equiv='refresh' content='0'>";
         exit;
     }
 };

@@ -14,12 +14,20 @@ class Tasks extends Controller
 
     }
 
-    function xhrGetTasks($offset=1)
+    function xhrGetTasks($offset=1, $sort=555)
     {
-        $this->model->xhrGetTasks($offset);
+        $this->model->xhrGetTasks($offset, $sort);
     }
 
-    function xhrDeleteTasks(){
+    function xhrDeleteTasks()
+    {
         $this->model->xhrDeleteTasks();
+    }
+
+    function UpdateStatus(){
+        $this->model->UpdateStatus();
+    }
+    function EditTask(){
+        $this->model->EditTask();
     }
 }

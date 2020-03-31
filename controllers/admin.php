@@ -10,7 +10,6 @@ class Admin extends Controller
         parent::__construct();
         $this->view->render('admin');
         $this->admin_model = new Admin_Model();
-/*         $model = new Admin_Model(); */
 
     }
     public function login($arg=null)
