@@ -1,4 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="containter">
     <div class="col-xl-5  mx-auto  form p-4">
         <div class="text-right mb-3">
@@ -47,12 +48,14 @@ let name=null;
 function getTasks(data){
     for (let i=0; i<data.length-2; i++){
         let status;
+        let statusUpdated;
         $('.list-wrapper').append( "<div class='card mt-3' style='width: 100%;'><div class='card-body'><h5 class='card-title'>" 
         + data[i].name + "</h5><h6 class='card-subtitle mb-2 text-muted'>" 
         + data[i].email + "</h6><p class='card-text'>" 
-        + data[i].task + "</p><button onClick='window.location.reload();' attr_id = '" 
+        + data[i].task + "<br><span class='text-muted edit' style='cursor:pointer'; attr_id='"+ data[i].id +"'>Редактировать</span></p><button onClick='window.location.reload();' attr_id = '" 
         + data[i].id + "' type='submit' class='btn btn-danger'>Remove</button></br></br><span attr_id='" + data[i].id + "'"
-        + statusFunc(data[i].status, status)+"</span><br><span attr_id='" + data[i].id + "' style='cursor:pointer'; >Редактировать</span></div></div>");
+        + statusFunc(data[i].status, status)+"</span>"
+        + isUpdated(data[i].updated, statusUpdated)+"</div></div>");
     }
     $( document ).ready(function() {
         let curPage =     $('#pagination').children()[data[data.length - 1]];
@@ -60,9 +63,18 @@ function getTasks(data){
     });
 }
 
+function isUpdated(datastatus, statusUpdated){
+    if(datastatus == 0 ){
+        statusUpdated = ''
+    } else {
+        statusUpdated = '</br><span class="text-muted float-right">edited by Admin</span>';
+    }
+    return statusUpdated
+}
+
 function statusFunc (datastatus, status){
         if(datastatus==0){
-            status = " style='cursor:pointer'; id='status' class='badge badge-secondary'>Not done yet...</span>";
+            status = " style='cursor:pointer'; id='status' class='badge badge-secondary'>Not done yet...";
         } else {
             status =" style='cursor:pointer'; id='status' class='badge badge-success'>Done!";
         }
@@ -88,11 +100,6 @@ $.get('tasks/xhrGetTasks/1', function (data){
         $('#pagination').append("<span class='paginHref' style=' padding: 5px; cursor:pointer;' rel ='"+i+"'>"+i+"</span>");
     }
 }, 'json');
-
-
-
-
-
 
 $(document).on('click', '.paginHref', function (e) {
     let numPage = $(this).attr('rel');
@@ -138,4 +145,38 @@ $('#post').submit(function (){
         })
         location.reload();
     })
+
+//Редактирование таска
+let edit_id; 
+$(document).on('click', '.edit', function (e) {
+        edit_id =$(this).attr('attr_id');
+
+        let thiss = e.target
+        $(thiss).parent().append('<div id = "editArea"><form attribute ="tasks/EditTask" id="saveEdit"><textarea name="edited_data" required class="form-control" rows="2">'
+        +'</textarea><button  type="submit" class="btn btn-primary">Save</button>'
+        +'<div id = "close" class="btn btn-warning">Close</div></form></div>')
+    })
+$(document).on('click', '#close', function (e) {
+    console.log($('#editArea'))
+    $('#editArea').remove()
+})
+
+
+$(document).on('submit', '#saveEdit', function (e) {
+
+/*         e.preventDefault(); */
+        let thisForm = $('#saveEdit').find ('textarea').val();
+        let data = new Array()
+        data.push(edit_id)
+        data.push(thisForm);
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "tasks/EditTask",
+            dataType: "JSON",
+            data:{data: data},
+         });
+
+    })
+
 </script>

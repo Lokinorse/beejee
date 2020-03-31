@@ -116,7 +116,11 @@ class Model
 
     function EditTask()
     {
-        
+        $post_id=$_POST['data'][0];
+        $post_edited=$_POST['data'][1];
+        $sth = $this->db->prepare('UPDATE tasks SET task = :post_edited, updated = 1 WHERE id = :post_id;');
+        $sth->execute([':post_edited'=>$post_edited,
+                        ':post_id'=>$post_id]);
 
     }
 

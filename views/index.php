@@ -50,27 +50,38 @@
 <script type="text/javascript">
 function statusFunc (datastatus, status){
         if(datastatus==0){
-            status = "<span style='cursor:pointer';  class='badge badge-secondary'>Not done yet...</span>";
+            status = "<span style='cursor:pointer';  class='badge badge-secondary'>Not done yet...";
         } else {
             status ="<span style='cursor:pointer'; class='badge badge-success'>Done!";
         }
         return status;
 }
-
+function isUpdated(datastatus, statusUpdated){
+    if(datastatus == 0 ){
+        statusUpdated = ''
+    } else {
+        statusUpdated = '</br><span class="text-muted float-right">edited by Admin</span>';
+    }
+    return statusUpdated
+}
 function getTasks(data){
     for (let i=0; i<data.length-2; i++){
         let status;
+        let statusUpdated;
         $('.list-wrapper').append( "<div class='card mt-3' style='width: 100%;'><div class='card-body'><h5 class='card-title'>" 
         + data[i].name + "</h5><h6 class='card-subtitle mb-2 text-muted'>" 
         + data[i].email + "</h6><p class='card-text'>" 
         + data[i].task + "</p></br></br><span attr_id='" + data[i].id + "'"
-        + statusFunc(data[i].status, status)+"</div></div>");
+        + statusFunc(data[i].status, status)+"</span>"
+        + isUpdated(data[i].updated, statusUpdated)+"</div></div>");
     }
     $( document ).ready(function() {
         let curPage =     $('#pagination').children()[data[data.length - 1]];
         $(curPage).css('color', 'red');
     });
 }
+
+
 
 /// СОРТИРОВКА
 let name=null;

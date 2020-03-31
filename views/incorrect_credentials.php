@@ -6,7 +6,7 @@
     <div class="text-right mb-3">
             <a href="/admin" class="btn btn-dark">Try login once more</a>
     </div>
-    <h1>Неверные логи</h1>
+    <h1><span class="badge badge-danger">Invalid credentials</span></h1>
     <img src = 'https://img.rosbalt.ru/photobank/e/e/e/1/qrhdV4fX-580.jpg'>
 </div>
 </div>
